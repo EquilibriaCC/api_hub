@@ -1,8 +1,8 @@
 package main
 
 import (
-	"teamAPI/config"
-	"teamAPI/tasks"
+	"xeq_hub/config"
+	"xeq_hub/tasks"
 )
 
 func main() {

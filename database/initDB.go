@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"teamAPI/config"
+	"xeq_hub/config"
 )
 
 var DB *sql.DB

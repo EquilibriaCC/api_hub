@@ -1,6 +1,9 @@
 package tasks
 
-import "time"
+import (
+	"math/big"
+	"time"
+)
 
 type CongeckoMarketResponse struct {
 	ID                 string        `json:"id"`
@@ -1553,4 +1556,120 @@ type HotBitOrderBook struct {
 		Bids [][]string `json:"bids"`
 	} `json:"result"`
 	ID int `json:"id"`
+}
+
+type HardForkInfoStruct struct {
+	ID      string `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		Credits        int    `json:"credits"`
+		EarliestHeight int    `json:"earliest_height"`
+		Enabled        bool   `json:"enabled"`
+		State          int    `json:"state"`
+		Status         string `json:"status"`
+		Threshold      int    `json:"threshold"`
+		TopHash        string `json:"top_hash"`
+		Untrusted      bool   `json:"untrusted"`
+		Version        int    `json:"version"`
+		Votes          int    `json:"votes"`
+		Voting         int    `json:"voting"`
+		Window         int    `json:"window"`
+	} `json:"result"`
+}
+
+type StakingRequirementStruct struct {
+	ID      string `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		StakingRequirement int    `json:"staking_requirement"`
+		Status             string `json:"status"`
+	} `json:"result"`
+}
+
+type BlockHeaderStruct struct {
+	ID      string `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		BlockHeader struct {
+			BlockSize                 int    `json:"block_size"`
+			BlockWeight               int    `json:"block_weight"`
+			CumulativeDifficulty      int64  `json:"cumulative_difficulty"`
+			CumulativeDifficultyTop64 int    `json:"cumulative_difficulty_top64"`
+			Depth                     int    `json:"depth"`
+			Difficulty                int    `json:"difficulty"`
+			DifficultyTop64           int    `json:"difficulty_top64"`
+			Hash                      string `json:"hash"`
+			Height                    int    `json:"height"`
+			LongTermWeight            int    `json:"long_term_weight"`
+			MajorVersion              int    `json:"major_version"`
+			MinerTxHash               string `json:"miner_tx_hash"`
+			MinorVersion              int    `json:"minor_version"`
+			Nonce                     int    `json:"nonce"`
+			NumTxes                   int    `json:"num_txes"`
+			OrphanStatus              bool   `json:"orphan_status"`
+			PowHash                   string `json:"pow_hash"`
+			PrevHash                  string `json:"prev_hash"`
+			Reward                    int    `json:"reward"`
+			Timestamp                 int    `json:"timestamp"`
+			WideCumulativeDifficulty  string `json:"wide_cumulative_difficulty"`
+			WideDifficulty            string `json:"wide_difficulty"`
+		} `json:"block_header"`
+		Credits   int    `json:"credits"`
+		Status    string `json:"status"`
+		TopHash   string `json:"top_hash"`
+		Untrusted bool   `json:"untrusted"`
+	} `json:"result"`
+}
+
+type ServiceNodeStruct struct {
+	ID      string `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		ServiceNodeStates []struct {
+			Contributors []struct {
+				Address  string `json:"address"`
+				Amount   int    `json:"amount"`
+				Reserved int    `json:"reserved"`
+			} `json:"contributors"`
+			LastRewardBlockHeight      int      `json:"last_reward_block_height"`
+			LastRewardTransactionIndex int64    `json:"last_reward_transaction_index"`
+			LastUptimeProof            int      `json:"last_uptime_proof"`
+			OperatorAddress            string   `json:"operator_address"`
+			PortionsForOperator        *big.Int `json:"portions_for_operator"`
+			RegistrationHeight         int      `json:"registration_height"`
+			ServiceNodePubkey          string   `json:"service_node_pubkey"`
+			StakingRequirement         int      `json:"staking_requirement"`
+			TotalContributed           int      `json:"total_contributed"`
+			TotalReserved              int      `json:"total_reserved"`
+		} `json:"service_node_states"`
+		Status string `json:"status"`
+	} `json:"result"`
+}
+
+type QuorumServiceNodesStruct struct {
+	ID      string `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		NodesToTest []string `json:"nodes_to_test"`
+		QuorumNodes []string `json:"quorum_nodes"`
+		Status      string   `json:"status"`
+		Untrusted   bool     `json:"untrusted"`
+	} `json:"result"`
+}
+
+type EmissionsStruct struct {
+	ID      string `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		Credits             int    `json:"credits"`
+		EmissionAmount      int    `json:"emission_amount"`
+		EmissionAmountTop64 int    `json:"emission_amount_top64"`
+		FeeAmount           int    `json:"fee_amount"`
+		FeeAmountTop64      int    `json:"fee_amount_top64"`
+		Status              string `json:"status"`
+		TopHash             string `json:"top_hash"`
+		Untrusted           bool   `json:"untrusted"`
+		WideEmissionAmount  string `json:"wide_emission_amount"`
+		WideFeeAmount       string `json:"wide_fee_amount"`
+	} `json:"result"`
 }

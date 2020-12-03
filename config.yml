@@ -1,4 +1,4 @@
-daemonURL: "http://newyork.equilibria.network:9231"
+daemonURL: "http://sanfran.equilibria.network:9231"
 APIPort: ":4000"
 RateLimitTime: 60 #Minutes
 RateLimitRequests: 2000 #Num Reqs in RateLimitTime

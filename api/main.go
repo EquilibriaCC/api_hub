@@ -4,7 +4,7 @@ import (
 	"auth/cors"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"teamAPI/config"
+	"xeq_hub/config"
 	"time"
 )
 
