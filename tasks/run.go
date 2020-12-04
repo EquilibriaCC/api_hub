@@ -1,6 +1,10 @@
 package tasks
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"os"
 	"time"
 )
 
@@ -15,16 +19,15 @@ var (
 	BlockHeader BlockHeaderStruct
 	ServiceNodes ServiceNodeStruct
 	QuorumServiceNodes QuorumServiceNodesStruct
+	OracleNodeList [][]string
+	OracleNodeHistory []int
+	EmissionHistory []int
 	Height int
 	Supply int
 )
 
-func RunTasks() {
-	networkInfo()
-	Emissions()
-	//marketInfo()
-	//hardforkInfo()
-
+func RunScheduledTasks() {
+	go writeToStorageTasks()
 	geckoTime, networkInfoTime, exchangePricesTime, hfInfoTimer := time.Now(), time.Now(), time.Now(), time.Now()
 	stakingReqTimer, blockHeadTimer, snTimer, emissionTimer := time.Now(), time.Now(), time.Now(), time.Now()
 	for {
@@ -46,11 +49,11 @@ func RunTasks() {
 		}
 		if time.Since(blockHeadTimer) > time.Second*5 {
 			go getPriceFromExchanges()
-			hfInfoTimer = time.Now()
+			blockHeadTimer = time.Now()
 		}
 		if time.Since(stakingReqTimer) > time.Second*15 {
 			go getPriceFromExchanges()
-			hfInfoTimer = time.Now()
+			stakingReqTimer = time.Now()
 		}
 		if time.Since(snTimer) > time.Minute {
 			go serviceNodes()
@@ -61,4 +64,60 @@ func RunTasks() {
 			emissionTimer = time.Now()
 		}
 	}
+}
+
+func writeToStorageTasks() {
+	emissionTimer, numNodesTimer := time.Now(), time.Now()
+	for {
+		if time.Since(emissionTimer) > time.Hour * 12 {
+			emissionTimer = time.Now()
+		}
+		if time.Since(numNodesTimer) > time.Hour * 12 {
+			numNodesTimer = time.Now()
+		}
+	}
+}
+
+func init() {
+	nodes := checkFiles("oraclenodehistory.json")
+	var data []int
+	err := json.Unmarshal(nodes, &data)
+	if err != nil {
+		log.Fatal("Could not initialise files")
+	}
+	OracleNodeHistory = data
+
+	emissions := checkFiles("emissionhistory.json")
+	err = json.Unmarshal(emissions, &data)
+	if err != nil {
+		log.Fatal("Could not initialise files")
+	}
+	EmissionHistory = data
+
+	//networkInfo()
+	//Emissions()
+	//marketInfo()
+	//hardforkInfo()
+}
+
+func checkFiles(fileName string) []byte {
+	storageFile, err := os.Open("tempstorage/"+fileName)
+	if err != nil {
+		file, _ := json.MarshalIndent([]int{}, "", " ")
+		err = ioutil.WriteFile("tempstorage/"+fileName, file, 0644)
+		if err != nil {
+			log.Fatal("Couldnt write " + fileName)
+		}
+		storageFile, err = os.Open("tempstorage/"+fileName)
+		if err != nil {
+			log.Fatal("Couldnt initialize file " + fileName)
+
+		}
+	}
+	fileBytes, err := ioutil.ReadAll(storageFile)
+	if err != nil {
+		log.Fatal("Couldnt initialize file " + fileName)
+
+	}
+	return fileBytes
 }

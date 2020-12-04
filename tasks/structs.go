@@ -1673,3 +1673,50 @@ type EmissionsStruct struct {
 		WideFeeAmount       string `json:"wide_fee_amount"`
 	} `json:"result"`
 }
+
+
+type TxResponseStruct struct {
+	Transactions []TxResponseDataStruct `json:"transactions"`
+	Txs          []TxResponseDataStruct `json:"txs"`
+}
+
+type TxResponseDataStruct struct {
+	IDHash         string `json:"id_hash"`
+	ReceiveTime    int    `json:"receive_time"`
+	TxJSON         string `json:"tx_json"`
+	AsJSON         string `json:"as_json"`
+	BlockHeight    int    `json:"block_height"`
+	BlockTimestamp int    `json:"block_timestamp"`
+	TxHash         string `json:"tx_hash"`
+}
+
+type ExtraTxJSONStruct struct {
+	Version    int `json:"version"`
+	UnlockTime int `json:"unlock_time"`
+	Vin        []struct {
+		Key struct {
+			Amount int    `json:"amount"`
+			KImage string `json:"k_image"`
+		} `json:"key"`
+	} `json:"vin"`
+	Vout []struct {
+		Amount int `json:"amount"`
+		Target struct {
+			Key string `json:"key"`
+		} `json:"target"`
+	} `json:"vout"`
+	RctSignatures struct {
+		Type   int `json:"type"`
+		TxnFee int `json:"txnFee"`
+	} `json:"rct_signatures"`
+}
+
+type TxsHashes struct {
+	Hash   []string `json:"txs_hashes"`
+	AsJson bool     `json:"decode_as_json"`
+}
+
+type HashesStruct struct {
+	MinerTxHash string   `json:"miner_tx_hash"`
+	TxHashes    []string `json:"tx_hashes"`
+}

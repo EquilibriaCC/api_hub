@@ -42,4 +42,6 @@ func GenerateConfig() {
 	DatabaseHost = conf.DatabaseHost
 	DatabaseUsername = conf.DatabaseUsername
 	DatabasePassword = conf.DatabasePassword
+	OracleNodeHistoryFileName = "emissionhistory.json"
+	EmissionHistoryFileName = "oraclenodehistory.json"
 }

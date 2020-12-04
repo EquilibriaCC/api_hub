@@ -10,35 +10,35 @@ var fetch = require('isomorphic-unfetch');
 app.use(cors());
 
 // Counts Pages
-let page_visits = {}
-let visits = async function (req, res, next) {
-    async function count() {
-        return new Promise(resolve => {
-            let counter = page_visits[req.originalUrl.toLowerCase()];
-            if (counter || counter === 0)
-                page_visits[req.originalUrl.toLowerCase()] = counter + 1;
-            else
-                page_visits[req.originalUrl.toLowerCase()] = 1;
-            resolve([req.originalUrl, page_visits[req.originalUrl.toLowerCase()]])
-        })
-    }
+// let page_visits = {}
+// let visits = async function (req, res, next) {
+//     async function count() {
+//         return new Promise(resolve => {
+//             let counter = page_visits[req.originalUrl.toLowerCase()];
+//             if (counter || counter === 0)
+//                 page_visits[req.originalUrl.toLowerCase()] = counter + 1;
+//             else
+//                 page_visits[req.originalUrl.toLowerCase()] = 1;
+//             resolve([req.originalUrl, page_visits[req.originalUrl.toLowerCase()]])
+//         })
+//     }
+//
+//     let counter = await count()
+//     next();
+// };
+// app.use(visits);
 
-    let counter = await count()
-    next();
-};
-app.use(visits);
+// app.get('/api/v1/number_of_requests', function (req, res) {
+//     fs.readFile(__dirname + "/" + "number_of_requests.json", 'utf8', function (err, data) {
+//         res.end(data)
+//     })
+// })
 
-app.get('/api/v1/number_of_requests', function (req, res) {
-    fs.readFile(__dirname + "/" + "number_of_requests.json", 'utf8', function (err, data) {
-        res.end(data)
-    })
-})
-
-app.get('/api/v1/emission', function (req, res) {
-    fs.readFile(__dirname + "/" + "emissions.json", 'utf8', function (err, data) {
-        res.end(data)
-    })
-})
+// app.get('/api/v1/emission', function (req, res) {
+//     fs.readFile(__dirname + "/" + "emissions.json", 'utf8', function (err, data) {
+//         res.end(data)
+//     })
+// })
 
 app.get('/api/v1/number_of_nodes', function (req, res) {
     fs.readFile(__dirname + "/" + "number_of_nodes.json", 'utf8', function (err, data) {

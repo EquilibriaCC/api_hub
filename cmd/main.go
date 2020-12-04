@@ -1,15 +1,18 @@
 package main
 
 import (
+	"xeq_hub/api"
 	"xeq_hub/config"
-	"xeq_hub/tasks"
 )
 
 func main() {
-	config.GenerateConfig()
-	go tasks.RunTasks()
-	//api.API()
+	//go tasks.RunScheduledTasks()
+	api.API()
 	select {
 
 	}
+}
+
+func init() {
+	config.GenerateConfig()
 }
